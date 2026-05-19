@@ -1,21 +1,27 @@
-# fly.toml app configuration file generated for langflow-arc on 2026-05-19T13:18:24Z
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
-app = 'langflow-arc'
-primary_region = 'sin'
+app = "langflow-arc"
+primary_region = "sin"
 
 [build]
 
+[env]
+  LANGFLOW_HOST = "0.0.0.0"
+  LANGFLOW_PORT = "7860"
+  LANGFLOW_CONFIG_DIR = "/data"
+  LANGFLOW_SAVE_DB_IN_CONFIG_DIR = "true"
+  LANGFLOW_DATABASE_URL = "sqlite:////data/langflow.db"
+
+[mounts]
+  source = "langflow_data"
+  destination = "/data"
+
 [http_service]
-  internal_port = 7680
+  internal_port = 7860
   force_https = true
-  auto_stop_machines = 'stop'
+  auto_stop_machines = "stop"
   auto_start_machines = true
   min_machines_running = 0
 
 [[vm]]
-  cpu_kind = 'performance'
+  cpu_kind = "performance"
   cpus = 2
   memory_mb = 4096
